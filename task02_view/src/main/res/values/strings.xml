@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Home task #2</string>
+    <string name="button_open_phonebook">Open Phonebook</string>
+    <string name="button_open_custom_view">Open Custom View</string>
+    <string name="button_open_web_page">Open Web Page</string>
+    <string name="toast_text">Use Snackbar</string>
+    <string name="previous_page">Previous Page</string>
+    <string name="open_in_browser">Open in Browser</string>
+    <string name="no_contacts_please_add">No contacts. Please add</string>
+    <string name="phone_number">Phone number</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+</resources>

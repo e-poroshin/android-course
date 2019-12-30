@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_blue_corner_radius">3dp</dimen>
+    <dimen name="button_red__corner_radius">20dp</dimen>
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="padding">3dp</dimen>
+    <dimen name="margin">20dp</dimen>
+    <dimen name="marginTop">40dp</dimen>
+</resources>
