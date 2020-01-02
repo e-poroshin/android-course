@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_main"
+        style="@style/myToolbar" />
+
+    <Button
+        android:id="@+id/buttonPhoneBook"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="@dimen/marginTop"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="@string/button_open_phonebook"
+        style="@style/buttonStyle"/>
+
+    <Button
+        android:id="@+id/buttonCustomView"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="@dimen/margin"
+        android:text="@string/button_open_custom_view"
+        style="@style/buttonStyle" />
+
+    <Button
+        android:id="@+id/buttonWebPage"
+        android:layout_width="240dp"
+        android:layout_height="45dp"
+        android:text="@string/button_open_web_page"
+        style="@style/buttonStyle" />
+
+</LinearLayout>
