@@ -2,40 +2,20 @@ package com.gmail.calculator;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    enum State { PLUS, MINUS, MULTIPLY, RATIO, PERCENT, OFF }
+
     private TextView textView1;
     private TextView textView2;
     private TextView textView3;
-    private Button buttonC;
-    private Button buttonBackspace;
-    private Button buttonRatio;
-    private boolean ratio;
-    private Button buttonMultiply;
-    private boolean multiply;
-    private Button buttonMinus;
-    private boolean minus;
-    private Button buttonPlus;
-    private boolean plus;
-    private Button buttonPercent;
-    private boolean percent;
-    private Button buttonPoint;
-    private Button buttonEquals;
-    private Button button9;
-    private Button button8;
-    private Button button7;
-    private Button button6;
-    private Button button5;
-    private Button button4;
-    private Button button3;
-    private Button button2;
-    private Button button1;
-    private Button button0;
+
+    private State state;
+
     private double firstNumber;
     private double secondNumber;
     private double result;
@@ -49,45 +29,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView1 = findViewById(R.id.textView1);
         textView2 = findViewById(R.id.textView2);
         textView3 = findViewById(R.id.textView3);
-        buttonC = findViewById(R.id.buttonC);
-        buttonRatio = findViewById(R.id.buttonRatio);
-        buttonMultiply = findViewById(R.id.buttonMultiply);
-        buttonBackspace = findViewById(R.id.buttonBackspace);
-        buttonMinus = findViewById(R.id.buttonMinus);
-        buttonPlus = findViewById(R.id.buttonPlus);
-        buttonPercent = findViewById(R.id.buttonPercent);
-        buttonPoint = findViewById(R.id.buttonPoint);
-        buttonEquals = findViewById(R.id.buttonEquals);
-        button9 = findViewById(R.id.button9);
-        button8 = findViewById(R.id.button8);
-        button7 = findViewById(R.id.button7);
-        button6 = findViewById(R.id.button6);
-        button5 = findViewById(R.id.button5);
-        button4 = findViewById(R.id.button4);
-        button3 = findViewById(R.id.button3);
-        button2 = findViewById(R.id.button2);
-        button1 = findViewById(R.id.button1);
-        button0 = findViewById(R.id.button0);
-
-        buttonC.setOnClickListener(this);
-        buttonRatio.setOnClickListener(this);
-        buttonMultiply.setOnClickListener(this);
-        buttonBackspace.setOnClickListener(this);
-        buttonMinus.setOnClickListener(this);
-        buttonPlus.setOnClickListener(this);
-        buttonPercent.setOnClickListener(this);
-        buttonPoint.setOnClickListener(this);
-        buttonEquals.setOnClickListener(this);
-        button9.setOnClickListener(this);
-        button8.setOnClickListener(this);
-        button7.setOnClickListener(this);
-        button6.setOnClickListener(this);
-        button5.setOnClickListener(this);
-        button4.setOnClickListener(this);
-        button3.setOnClickListener(this);
-        button2.setOnClickListener(this);
-        button1.setOnClickListener(this);
-        button0.setOnClickListener(this);
+        findViewById(R.id.buttonC).setOnClickListener(this);
+        findViewById(R.id.buttonRatio).setOnClickListener(this);
+        findViewById(R.id.buttonMultiply).setOnClickListener(this);
+        findViewById(R.id.buttonBackspace).setOnClickListener(this);
+        findViewById(R.id.buttonMinus).setOnClickListener(this);
+        findViewById(R.id.buttonPlus).setOnClickListener(this);
+        findViewById(R.id.buttonPercent).setOnClickListener(this);
+        findViewById(R.id.buttonPoint).setOnClickListener(this);
+        findViewById(R.id.buttonEquals).setOnClickListener(this);
+        findViewById(R.id.button9).setOnClickListener(this);
+        findViewById(R.id.button8).setOnClickListener(this);
+        findViewById(R.id.button7).setOnClickListener(this);
+        findViewById(R.id.button6).setOnClickListener(this);
+        findViewById(R.id.button5).setOnClickListener(this);
+        findViewById(R.id.button4).setOnClickListener(this);
+        findViewById(R.id.button3).setOnClickListener(this);
+        findViewById(R.id.button2).setOnClickListener(this);
+        findViewById(R.id.button1).setOnClickListener(this);
+        findViewById(R.id.button0).setOnClickListener(this);
     }
 
     @Override
@@ -95,21 +55,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.buttonC :
+                textView1.setText("");
                 textView2.setText("");
+                textView3.setText("");
+                state = State.OFF;
                 break;
             case R.id.buttonRatio :
                 textView1.setText("/");
-                ratio = true;
-                firstNumber = Double.valueOf(textView2.getText().toString());
-                textView3.setText(textView2.getText().toString());
-                textView2.setText("");
+                state = State.RATIO;
+                changeText();
                 break;
             case R.id.buttonMultiply :
                 textView1.setText("*");
-                multiply = true;
-                firstNumber = Double.valueOf(textView2.getText().toString());
-                textView3.setText(textView2.getText().toString());
-                textView2.setText("");
+                state = State.MULTIPLY;
+                changeText();
                 break;
             case R.id.buttonBackspace :
                 String str = removeChar(textView2.getText().toString());
@@ -117,38 +76,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonMinus :
                 textView1.setText("-");
-                minus = true;
-                firstNumber = Double.valueOf(textView2.getText().toString());
-                textView3.setText(textView2.getText().toString());
-                textView2.setText("");
+                state = State.MINUS;
+                changeText();
                 break;
             case R.id.buttonPlus :
                 textView1.setText("+");
-                plus = true;
-                firstNumber = Double.valueOf(textView2.getText().toString());
-                textView3.setText(textView2.getText().toString());
-                textView2.setText("");
+                state = State.PLUS;
+                changeText();
                 break;
             case R.id.buttonPercent :
                 secondNumber = Double.valueOf(textView2.getText().toString());
-                percent = true;
-                if (plus) {
+                if (state == State.PLUS) {
                     stringResult = String.valueOf(firstNumber + (firstNumber * secondNumber / 100));
-                    plus = false;
-                    percent = false;
-                } else if (minus) {
+                    state = State.OFF;
+                } else if (state == State.MINUS) {
                     stringResult = String.valueOf(firstNumber - (firstNumber * secondNumber / 100));
-                    minus = false;
-                    percent = false;
-                } else if (multiply) {
+                    state = State.OFF;
+                } else if (state == State.MULTIPLY) {
                     stringResult = String.valueOf(firstNumber * secondNumber / 100);
-                    multiply = false;
-                    percent = false;
-                } else if (ratio) {
+                    state = State.OFF;
+                } else if (state == State.RATIO) {
                     stringResult = String.valueOf(firstNumber / secondNumber * 100);
-                    ratio = false;
-                    percent = false;
+                    state = State.OFF;
                 }
+                state = State.PERCENT;
                 textView1.setText("");
                 textView3.setText("");
                 textView2.setText(stringResult);
@@ -158,22 +109,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonEquals :
                 secondNumber = Double.valueOf(textView2.getText().toString());
-                if (plus) {
+                if (state == State.PLUS) {
                     result = firstNumber + secondNumber;
-                    plus = false;
-                } else if (minus) {
+                } else if (state == State.MINUS) {
                     result = firstNumber - secondNumber;
-                    minus = false;
-                } else if (multiply) {
+                } else if (state == State.MULTIPLY) {
                     result = firstNumber * secondNumber;
-                    multiply = false;
-                } else if (ratio) {
+                } else if (state == State.RATIO) {
                     result = firstNumber / secondNumber;
-                    ratio = false;
-                } else if (percent) {
+                } else if (state == State.PERCENT) {
                     result = 0;
-                    percent = false;
                 }
+                state = State.OFF;
                 stringResult = String.valueOf(result);
                 textView1.setText("");
                 textView3.setText("");
@@ -209,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button0 :
                 textView2.append("0");
                 break;
-
         }
     }
 
@@ -218,5 +164,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             str = str.substring(0, str.length() - 1);
         }
         return str;
+    }
+
+    public void changeText() {
+        firstNumber = Double.valueOf(textView2.getText().toString());
+        textView3.setText(textView2.getText().toString());
+        textView2.setText("");
     }
 }
