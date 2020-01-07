@@ -17,7 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class WebPageActivity extends AppCompatActivity {
 
-    private Toolbar myToolbar;
+    private Toolbar toolbar;
     private WebView webView;
     private Button buttonPreviousPage;
     private Button buttonOpenInBrowser;
@@ -54,12 +54,12 @@ public class WebPageActivity extends AppCompatActivity {
         webView.loadUrl("https://google.com");
 
 
-        myToolbar = findViewById(R.id.toolbar_WebView);
-        setSupportActionBar(myToolbar);
+        toolbar = findViewById(R.id.toolbar_WebView);
+        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            myToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         }
 
         buttonPreviousPage = findViewById(R.id.buttonPreviousPage);

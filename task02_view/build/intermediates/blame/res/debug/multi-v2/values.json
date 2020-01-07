@@ -161,20 +161,20 @@
                 {
                     "source": "C:\\Users\\Eugene\\AndroidStudioProjects\\MyTestApplication2\\task02_view\\src\\main\\res\\values\\styles.xml",
                     "from": {
-                        "startLines": "3,-1,-1,-1,37",
-                        "startColumns": "4,-1,-1,-1,4",
-                        "startOffsets": "57,-1,-1,-1,1673",
-                        "endLines": "9,-1,-1,-1,42",
-                        "endColumns": "12,-1,-1,-1,12",
-                        "endOffsets": "383,-1,-1,-1,2003"
+                        "startLines": "3,-1,-1,11,-1",
+                        "startColumns": "4,-1,-1,4,-1",
+                        "startOffsets": "57,-1,-1,391,-1",
+                        "endLines": "9,-1,-1,16,-1",
+                        "endColumns": "12,-1,-1,12,-1",
+                        "endOffsets": "383,-1,-1,711,-1"
                     },
                     "to": {
-                        "startLines": "891,4424,4431,4440,4447",
+                        "startLines": "891,4424,4431,4440,4446",
                         "startColumns": "4,4,4,4,4",
-                        "startOffsets": "59785,289571,289960,290429,290824",
-                        "endLines": "896,4430,4439,4446,4452",
+                        "startOffsets": "59785,289571,289960,290429,290749",
+                        "endLines": "896,4430,4439,4445,4451",
                         "endColumns": "12,12,12,12,12",
-                        "endOffsets": "60097,289955,290424,290819,291149"
+                        "endOffsets": "60097,289955,290424,290744,291074"
                     }
                 },
                 {

@@ -13,15 +13,15 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonPhoneBook;
     private Button buttonCustomView;
     private Button buttonWebPage;
-    private Toolbar myToolbar;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-        myToolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(myToolbar);
+        toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Choose action");
 
         buttonPhoneBook = findViewById(R.id.buttonPhoneBook);

@@ -15,26 +15,25 @@ import androidx.appcompat.widget.Toolbar;
 
 public class PhoneBookEditContactActivity extends AppCompatActivity {
 
-    private Toolbar myToolbar;
+    private Toolbar toolbar;
     private EditText editTextName;
     private EditText editTextPhoneOrEmail;
     private Button buttonRemove;
 
     private Contact contact;
-    private int position;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phonebook_edit_contact);
 
-        myToolbar = findViewById(R.id.toolbar_phonebook_edit);
-        setSupportActionBar(myToolbar);
+        toolbar = findViewById(R.id.toolbar_phonebook_edit);
+        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle("Edit contact");
-            myToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         }
 
         editTextName = findViewById(R.id.editTextName);
@@ -42,24 +41,23 @@ public class PhoneBookEditContactActivity extends AppCompatActivity {
         buttonRemove = findViewById(R.id.buttonRemove);
 
         Bundle arguments = getIntent().getExtras();
-
         if(arguments!=null){
             contact = (Contact) arguments.getSerializable(Contact.class.getSimpleName());
-            position = arguments.getInt("position");
-            contact.setPosition(position);
 
             editTextName.setText(contact.getName());
             editTextPhoneOrEmail.setText(contact.getData());
 
-            if (contact.isEmailSelected()) {
+            if (contact.getOption() == ContactSelectedOption.EMAIL) {
                 editTextPhoneOrEmail.setHint("Email");
+            } else if (contact.getOption() == ContactSelectedOption.PHONE) {
+                editTextPhoneOrEmail.setHint("Phone number");
             }
         }
 
         buttonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PhoneBookMainActivity.removeItemAdapter(contact);
+                Observer.getInstance().notifyRemoveContact(contact);
                 finish();
             }
         });
@@ -88,12 +86,8 @@ public class PhoneBookEditContactActivity extends AppCompatActivity {
             contact.setName(name);
             contact.setData(phoneOrEmail);
 
-            Observer.getInstance().notifyContactChanged(contact);
-            PhoneBookMainActivity.changeItemAdapter(contact);
+            Observer.getInstance().notifyChangeContact(contact);
             finish();
-
-            editTextName.getText().clear();
-            editTextPhoneOrEmail.getText().clear();
 
             return true;
         }

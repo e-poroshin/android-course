@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
@@ -12,54 +11,51 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.UUID;
+
 
 public class PhoneBookAddContactActivity extends AppCompatActivity {
 
-    private Toolbar myToolbar;
+    private Toolbar toolbar;
     private RadioGroup radioGroup;
-    private RadioButton radioButtonPhone;
-    private RadioButton radioButtonEmail;
-    private EditText editTextName;
-    private EditText editTextPhoneOrEmail;
-
+    private EditText editTextContactName;
+    private EditText editTextContactData;
     private Contact contact;
-    private boolean isEmailSelected;
-
+    private ContactSelectedOption option;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phonebook_add_contact);
 
-        myToolbar = findViewById(R.id.toolbar_phonebook_add);
-        setSupportActionBar(myToolbar);
+        toolbar = findViewById(R.id.toolbar_phonebook_add);
+        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle("Add contact");
-            myToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+            toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         }
         radioGroup = findViewById(R.id.radioGroup);
-        radioButtonPhone = findViewById(R.id.radioButtonPhone);
-        radioButtonEmail = findViewById(R.id.radioButtonEmail);
-        editTextName = findViewById(R.id.editTextName);
-        editTextPhoneOrEmail = findViewById(R.id.editTextPhoneOrEmail);
+        editTextContactName = findViewById(R.id.editTextName);
+        editTextContactData = findViewById(R.id.editTextPhoneOrEmail);
 
+        option = ContactSelectedOption.PHONE;
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                //int checkedRadioId = group.getCheckedRadioButtonId();
-                if (radioButtonPhone.isChecked()) {
-                    editTextPhoneOrEmail.setHint("Phone number");
-                    isEmailSelected = false;
-                } else if (radioButtonEmail.isChecked()){
-                    editTextPhoneOrEmail.setHint("Email");
-                    isEmailSelected = true;
+                int checkedRadioId = group.getCheckedRadioButtonId();
+                if (checkedRadioId == R.id.radioButtonPhone) {
+                    editTextContactData.setHint("Phone number");
+                    option = ContactSelectedOption.PHONE;
+                }
+                if (checkedRadioId == R.id.radioButtonEmail){
+                    editTextContactData.setHint("Email");
+                    option = ContactSelectedOption.EMAIL;
                 }
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,20 +74,15 @@ public class PhoneBookAddContactActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.action_check) {
 
-            String name = editTextName.getText().toString();
-            String phoneOrEmail = editTextPhoneOrEmail.getText().toString();
+            String name = editTextContactName.getText().toString();
+            String data = editTextContactData.getText().toString();
+            String id = UUID.randomUUID().toString();
 
-            contact = new Contact();
-            contact.setName(name);
-            contact.setData(phoneOrEmail);
-            contact.setEmailSelected(isEmailSelected);
+            contact = new Contact(name, data, option, id);
 
-            Observer.getInstance().notifyContactChanged(contact);
+            Observer.getInstance().notifyAddContact(contact);
 
-            PhoneBookMainActivity.addItemAdapter(contact);
             finish();
-            editTextName.getText().clear();
-            editTextPhoneOrEmail.getText().clear();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,4 +1,4 @@
-#Mon Dec 30 19:47:50 MSK 2019
+#Tue Jan 07 12:25:06 MSK 2020
 base.0=C\:\\Users\\Eugene\\AndroidStudioProjects\\MyTestApplication2\\task02_view\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

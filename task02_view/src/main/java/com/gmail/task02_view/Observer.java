@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 public class Observer {
 
-    interface Listener {
+    interface onContactActionListener {
+        void addContact(Contact contact);
         void onContactChange(Contact contact);
-
+        void removeContact(Contact contact);
     }
 
-    private ArrayList<Listener> listeners = new ArrayList<Listener>();
+    private ArrayList<onContactActionListener> onContactActionListeners = new ArrayList<>();
 
     private static Observer instance;
 
@@ -24,23 +25,39 @@ public class Observer {
         return instance;
     }
 
-    public void notifyContactChanged(final Contact contact) {
-        if (!listeners.isEmpty()) {
-            for (Listener listener : listeners) {
-                listener.onContactChange(contact);
+    public void notifyAddContact(final Contact contact) {
+        if (!onContactActionListeners.isEmpty()) {
+            for (onContactActionListener onContactActionListener : onContactActionListeners) {
+                onContactActionListener.addContact(contact);
             }
         }
     }
 
-    public void subscribe(Listener listener) {
-        if (listener != null) {
-            listeners.add(listener);
+    public void notifyChangeContact(final Contact contact) {
+        if (!onContactActionListeners.isEmpty()) {
+            for (onContactActionListener onContactActionListener : onContactActionListeners) {
+                onContactActionListener.onContactChange(contact);
+            }
         }
     }
 
-    public void unsubscribe(Listener listener) {
-        if (listener != null) {
-            listeners.remove(listener);
+    public void notifyRemoveContact(final Contact contact) {
+        if (!onContactActionListeners.isEmpty()) {
+            for (onContactActionListener onContactActionListener : onContactActionListeners) {
+                onContactActionListener.removeContact(contact);
+            }
+        }
+    }
+
+    public void subscribe(onContactActionListener onContactActionListener) {
+        if (onContactActionListener != null) {
+            onContactActionListeners.add(onContactActionListener);
+        }
+    }
+
+    public void unsubscribe(onContactActionListener onContactActionListener) {
+        if (onContactActionListener != null) {
+            onContactActionListeners.remove(onContactActionListener);
         }
     }
 }

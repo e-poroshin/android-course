@@ -1508,7 +1508,6 @@ id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
-id action_search
 id action_text
 id actions
 id activity_chooser_view_content
@@ -1721,6 +1720,7 @@ id start
 id stretch
 id submenuarrow
 id submit_area
+id sv_search
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
@@ -1908,7 +1908,6 @@ layout text_view_with_line_height_from_layout
 layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
-menu search_main_menu
 menu user_info_menu
 mipmap ic_launcher
 mipmap ic_launcher_round

@@ -6,17 +6,17 @@ public class Contact implements Serializable {
 
     private String name;
     private String data;
-    private boolean isEmailSelected;
-    private int position;
+    private ContactSelectedOption option;
+    private String id;
 
     public Contact() {
     }
 
-    public Contact(String name, String data1, boolean isPhoneSelected, int position) {
+    public Contact(String name, String data, ContactSelectedOption option, String id) {
         this.name = name;
-        this.data = data1;
-        this.isEmailSelected = isPhoneSelected;
-        this.position = position;
+        this.data = data;
+        this.option = option;
+        this.id = id;
     }
 
     public String getName() {
@@ -35,19 +35,20 @@ public class Contact implements Serializable {
         this.data = data;
     }
 
-    public boolean isEmailSelected() {
-        return isEmailSelected;
+    public ContactSelectedOption getOption() {
+        return option;
     }
 
-    public void setEmailSelected(boolean emailSelected) {
-        isEmailSelected = emailSelected;
+    public void setOption(ContactSelectedOption option) {
+        this.option = option;
     }
 
-    public int getPosition() {
-        return position;
+    public String getId() {
+        return id;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setId(String id) {
+        this.id = id;
     }
+
 }
