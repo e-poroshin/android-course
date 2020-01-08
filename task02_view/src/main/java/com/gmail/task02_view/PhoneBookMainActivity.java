@@ -54,7 +54,6 @@ public class PhoneBookMainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
                 return false;
             }
 
@@ -155,19 +154,19 @@ public class PhoneBookMainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-            if (contacts.get(position).getOption() == ContactSelectedOption.EMAIL) {
+            if (contactListFull.get(position).getOption() == ContactSelectedOption.EMAIL) {
                 holder.imageView.setImageResource(R.drawable.ic_contact_mail_magenta_24dp);
-            } else if (contacts.get(position).getOption() == ContactSelectedOption.PHONE) {
+            } else if (contactListFull.get(position).getOption() == ContactSelectedOption.PHONE) {
                 holder.imageView.setImageResource(R.drawable.ic_contact_phone_blue_24dp);
             }
-            holder.textViewName.setText(contacts.get(position).getName());
-            holder.textViewData.setText(contacts.get(position).getData());
+            holder.textViewName.setText(contactListFull.get(position).getName());
+            holder.textViewData.setText(contactListFull.get(position).getData());
         }
 
         @Override
         public int getItemCount() {
-            if (contacts != null) {
-                return contacts.size();
+            if (contactListFull != null) {
+                return contactListFull.size();
             } else
                 return 0;
         }
@@ -181,9 +180,9 @@ public class PhoneBookMainActivity extends AppCompatActivity {
                     List<Contact> filteredList = new ArrayList<>();
 
                     if (charSequence == null || charSequence.length() == 0) {
-                        filteredList.addAll(contactListFull);
+                        filteredList.addAll(contacts);
                     } else {
-                        for (Contact cont : contactListFull) {
+                        for (Contact cont : contacts) {
                             if (cont.getName().toLowerCase().contains(filterPattern)) {
                                 filteredList.add(cont);
                                 Log.d("tag", cont.getName());
@@ -223,7 +222,7 @@ public class PhoneBookMainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         int position = getAdapterPosition();
-                        Contact currentContact = contacts.get(position);
+                        Contact currentContact = contactListFull.get(position);
 
                         Intent intent = new Intent(PhoneBookMainActivity.this, PhoneBookEditContactActivity.class);
                         intent.putExtra(Contact.class.getSimpleName(), (Serializable) currentContact);
