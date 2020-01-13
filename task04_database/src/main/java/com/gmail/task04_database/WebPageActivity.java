@@ -1,6 +1,8 @@
 package com.gmail.task04_database;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -23,6 +25,8 @@ public class WebPageActivity extends AppCompatActivity {
     private Button buttonOpenInBrowser;
     private String currentUrl;
 
+    private AlertDialog.Builder dialogBuilder;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +34,8 @@ public class WebPageActivity extends AppCompatActivity {
 
         webView = findViewById(R.id.web_view);
         WebViewClient webViewClient = new WebViewClient() {
-            @SuppressWarnings("deprecation") @Override
+            @SuppressWarnings("deprecation")
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 currentUrl = url;
@@ -40,7 +45,8 @@ public class WebPageActivity extends AppCompatActivity {
                 return true;
             }
 
-            @TargetApi(Build.VERSION_CODES.N) @Override
+            @TargetApi(Build.VERSION_CODES.N)
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 view.loadUrl(request.getUrl().toString());
                 currentUrl = webView.getUrl();
@@ -53,6 +59,22 @@ public class WebPageActivity extends AppCompatActivity {
         webView.setWebViewClient(webViewClient);
         webView.loadUrl("https://google.com");
 
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setMessage("Вы уверены, что хотите открыть страницу в стороннем браузере?")
+                .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Uri webPage = Uri.parse(currentUrl);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
+                    }
+                })
+                .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
 
         toolbar = findViewById(R.id.toolbar_WebView);
         setSupportActionBar(toolbar);
@@ -66,7 +88,7 @@ public class WebPageActivity extends AppCompatActivity {
         buttonPreviousPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(webView.canGoBack()) {
+                if (webView.canGoBack()) {
                     webView.goBack();
                 } else {
                     onBackPressed();
@@ -78,11 +100,7 @@ public class WebPageActivity extends AppCompatActivity {
         buttonOpenInBrowser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri webPage = Uri.parse(currentUrl);
-                Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
+                dialogBuilder.show();
             }
         });
     }
@@ -92,5 +110,4 @@ public class WebPageActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.gmail.task04_database;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -10,12 +11,26 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class CustomViewActivity extends AppCompatActivity implements onCustomViewTouchListener {
 
     private DrawCustomView drawCustomView;
     private Toolbar toolbar;
     private Switch mySwitch;
+
+    private final String LOG_TAG = "myLogs";
+    private final String FILENAME = "file";
+    private final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    private String dateAndTimeFormated;
 
 
     @Override
@@ -53,22 +68,46 @@ public class CustomViewActivity extends AppCompatActivity implements onCustomVie
 
     @Override
     public boolean getCoordinates(String coordinates) {
+        dateAndTimeFormated = getCurrentDateAndTime();
         if (mySwitch.isChecked()) {
             Toast.makeText(this, coordinates, Toast.LENGTH_SHORT).show();
         } else if (!mySwitch.isChecked()) {
-            Snackbar.make(drawCustomView, coordinates, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(drawCustomView, coordinates + " " + dateAndTimeFormated, Snackbar.LENGTH_SHORT).show();
+            writeToFile(coordinates);
         }
         return true;
     }
 
     @Override
     public boolean getColors(String color) {
+        dateAndTimeFormated = getCurrentDateAndTime();
         if (mySwitch.isChecked()) {
             Toast.makeText(this, color, Toast.LENGTH_SHORT).show();
         } else if (!mySwitch.isChecked()) {
-            Snackbar.make(drawCustomView, color, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(drawCustomView, color + " " + dateAndTimeFormated, Snackbar.LENGTH_SHORT).show();
+            writeToFile(color);
         }
         return true;
+    }
+
+    public void writeToFile(String message) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                    openFileOutput(FILENAME, MODE_APPEND)));
+            bw.write(message);
+            bw.close();
+            Log.d(LOG_TAG, "Файл записан");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getCurrentDateAndTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+        String currentDateAndTime = sdf.format(new Date());
+        return currentDateAndTime;
     }
 }
 

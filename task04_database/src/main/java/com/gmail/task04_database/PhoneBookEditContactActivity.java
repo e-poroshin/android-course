@@ -19,8 +19,7 @@ import java.io.Serializable;
 public class PhoneBookEditContactActivity extends AppCompatActivity {
 
 
-    public static final String EXTRA_REPLY_EDIT = "com.gmail.task04_database.contactlistsql.REPLY_EDIT";
-    public static final String EXTRA_REPLY_DELETE = "com.gmail.task04_database.contactlistsql.REPLY_DELETE";
+    public static final String EXTRA_REPLY = "REPLY";
 
     private Toolbar toolbar;
     private EditText editTextName;
@@ -66,8 +65,8 @@ public class PhoneBookEditContactActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent replyIntent = new Intent();
 
-                replyIntent.putExtra(EXTRA_REPLY_DELETE, (Serializable) contact);
-                setResult(RESULT_OK, replyIntent);
+                replyIntent.putExtra(EXTRA_REPLY, (Serializable) contact);
+                setResult(RESULT_FIRST_USER, replyIntent);
                 finish();
             }
         });
@@ -98,7 +97,7 @@ public class PhoneBookEditContactActivity extends AppCompatActivity {
 
             Intent replyIntent = new Intent();
 
-            replyIntent.putExtra(EXTRA_REPLY_EDIT, (Serializable) contact);
+            replyIntent.putExtra(EXTRA_REPLY, (Serializable) contact);
             setResult(RESULT_OK, replyIntent);
 
             finish();

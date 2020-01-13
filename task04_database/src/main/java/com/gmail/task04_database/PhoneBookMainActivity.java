@@ -13,7 +13,6 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,11 +37,10 @@ public class PhoneBookMainActivity extends AppCompatActivity {
     private TextView textView;
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
-    private List<Contact> contacts;
+    private List<Contact> contacts = new ArrayList<>();
     private ContactViewModel mContactViewModel;
     public static final int REQUEST_CODE_ADD_CONTACT = 1;
-    public static final int REQUEST_CODE_EDIT_CONTACT = 2;
-    public static final int REQUEST_CODE_DELET_CONTACT = 3;
+    public static final int REQUEST_CODE_EDIT_OR_DELETE_CONTACT = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,17 +84,16 @@ public class PhoneBookMainActivity extends AppCompatActivity {
         }
         recyclerView.setAdapter(adapter);
 
-        if (savedInstanceState != null) {
-            contacts = (ArrayList<Contact>) savedInstanceState.getSerializable("key");
-        }
-
         mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
-        mContactViewModel.getAllContacts().observe(this, contacts -> adapter.setContacts(contacts));
+        mContactViewModel.getAllContacts().observe(this, contactsList -> {
+            contacts = contactsList;
+            adapter.setContacts(contacts);
+            changeEmptyTitle();
+        });
+
     }
 
-    @Override
-    protected void onResume() {        /////////////////////////////////не работает
-        super.onResume();
+    private void changeEmptyTitle() {
         if (contacts.size() != 0) {
             textView.setVisibility(View.GONE);
         } else {
@@ -110,32 +107,21 @@ public class PhoneBookMainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_ADD_CONTACT && resultCode == RESULT_OK) {
             Contact contact = (Contact) data.getSerializableExtra(PhoneBookAddContactActivity.EXTRA_REPLY);
             mContactViewModel.insert(contact);
-        } else if (requestCode == REQUEST_CODE_EDIT_CONTACT && resultCode == RESULT_OK) {
-            Contact contact = (Contact) data.getSerializableExtra(PhoneBookEditContactActivity.EXTRA_REPLY_EDIT);
+        } else if (requestCode == REQUEST_CODE_EDIT_OR_DELETE_CONTACT && resultCode == RESULT_OK) {
+            Contact contact = (Contact) data.getSerializableExtra(PhoneBookEditContactActivity.EXTRA_REPLY);
             mContactViewModel.update(contact);
-        } else if (requestCode == REQUEST_CODE_DELET_CONTACT && resultCode == RESULT_OK) {
-            Contact contact = (Contact)data.getSerializableExtra(PhoneBookEditContactActivity.EXTRA_REPLY_DELETE);
+        } else if (requestCode == REQUEST_CODE_EDIT_OR_DELETE_CONTACT && resultCode == RESULT_FIRST_USER) {
+            Contact contact = (Contact)data.getSerializableExtra(PhoneBookEditContactActivity.EXTRA_REPLY);
             mContactViewModel.delete(contact);
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    "Something wrong",
-                    Toast.LENGTH_LONG).show();
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("key", (Serializable) contacts);
     }
 
     public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder> implements Filterable {
 
         private List<Contact> contactListFull;
 
-        public RecyclerAdapter(ArrayList<Contact> contacts1) {
-            contacts = contacts1;
-            contactListFull = new ArrayList<>(contacts1);
+        public RecyclerAdapter(ArrayList<Contact> contacts) {
+            contactListFull = new ArrayList<>(contacts);
         }
 
         @NonNull
@@ -157,9 +143,8 @@ public class PhoneBookMainActivity extends AppCompatActivity {
         }
 
 
-        void setContacts(List<Contact> contacts1) {
-            contacts = contacts1;
-            contactListFull = contacts1;
+        void setContacts(List<Contact> contacts) {
+            contactListFull = contacts;
             notifyDataSetChanged();
         }
 
@@ -180,7 +165,7 @@ public class PhoneBookMainActivity extends AppCompatActivity {
                     String filterPattern = charSequence.toString().toLowerCase().trim();
                     List<Contact> filteredList = new ArrayList<>();
 
-                    if (charSequence == null || charSequence.length() == 0) {
+                    if (charSequence.length() == 0) {
                         filteredList.addAll(contacts);
                     } else {
                         for (Contact cont : contacts) {
@@ -198,11 +183,8 @@ public class PhoneBookMainActivity extends AppCompatActivity {
 
                 @Override
                 protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                    contactListFull.clear();
-                    contactListFull.addAll((ArrayList<Contact>) filterResults.values);
+                    contactListFull = (ArrayList<Contact>) filterResults.values;
                     notifyDataSetChanged();
-                    String fl = contactListFull.toString();
-                    Log.d("tag", fl);
                 }
             };
         }
@@ -226,10 +208,9 @@ public class PhoneBookMainActivity extends AppCompatActivity {
                     Intent intent = new Intent(PhoneBookMainActivity.this, PhoneBookEditContactActivity.class);
                     intent.putExtra(Contact.class.getSimpleName(), (Serializable) currentContact);
 
-                    startActivityForResult(intent, REQUEST_CODE_EDIT_CONTACT);
+                    startActivityForResult(intent, REQUEST_CODE_EDIT_OR_DELETE_CONTACT);
                 });
             }
         }
     }
-
 }
