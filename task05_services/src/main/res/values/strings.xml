@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Services</string>
+    <string name="start_my_context_action">Start my custom context action</string>
+    <string name="start_my_manifest_action">Start my custom manifest action</string>
+    <string name="context_declared_receivers">Context-declared receiver</string>
+    <string name="manifest_declared_receivers">Manifest-declared receiver</string>
+</resources>
