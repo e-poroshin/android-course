@@ -19,7 +19,6 @@ public class ReceiverManifest extends BroadcastReceiver {
             Intent intent1 = new Intent(context, MyCustomService.class);
             intent1.putExtra("ACTION", action);
             context.startService(intent1);
-            context.stopService(intent1);
         }
     }
 }

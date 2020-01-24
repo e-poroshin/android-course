@@ -19,9 +19,6 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String LOG_TAG = "my_log";
-    private final String FILENAME = "file_logs";
-
     public final static String MY_BROADCAST_CONTEXT_ACTION = "com.gmail.task05_services.ACTION_MY_ACTION";
     public final static String MY_BROADCAST_MANIFEST_ACTION = "com.gmail.task05_services.ACTION_MANIFEST_ACTION";
 
@@ -48,16 +45,12 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(context, MyCustomService.class);
                     intent1.putExtra("ACTION", action);
                     context.startService(intent1);
-                    context.stopService(intent1);
-                    readFile();
                 }
                 if (Intent.ACTION_SCREEN_ON.equals(action)) {
                     Toast.makeText(context, "Screen on", Toast.LENGTH_SHORT).show();
                     Intent intent1 = new Intent(context, MyCustomService.class);
                     intent1.putExtra("ACTION", action);
                     context.startService(intent1);
-                    context.stopService(intent1);
-                    readFile();
                 }
 
                 if (MY_BROADCAST_CONTEXT_ACTION.equals(action)) {
@@ -66,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(context, MyCustomService.class);
                     intent1.putExtra("ACTION", action);
                     context.startService(intent1);
-                    context.stopService(intent1);
                 }
             }
         };
@@ -84,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.setAction(MY_BROADCAST_CONTEXT_ACTION);
                 intent.putExtra("TEXT", "My custom context action");
                 sendBroadcast(intent);
-                readFile();
             }
         });
 
@@ -95,26 +86,9 @@ public class MainActivity extends AppCompatActivity {
                 intent.setAction(MY_BROADCAST_MANIFEST_ACTION);
                 intent.putExtra("TEXT", "This is my custom manifest action");
                 sendBroadcast(intent);
-                readFile();
             }
         });
 
-    }
-
-    public void readFile() {
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    openFileInput(FILENAME)));
-            String str = "";
-            while ((str = br.readLine()) != null) {
-                Log.d(LOG_TAG, str);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.d(LOG_TAG, "Файл прочитан");
     }
 
     @Override
