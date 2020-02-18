@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="switch"
+        android:title="Temperature mode"
+        android:summaryOff="Celsius"
+        android:summaryOn="Fahrenheit"
+        android:icon="@drawable/ic_wb_sunny_black_24dp"/>
+
+</PreferenceScreen>
