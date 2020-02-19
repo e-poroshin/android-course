@@ -60,6 +60,26 @@ public class ForecastFragment extends Fragment {
     private WeatherForecastAdapter adapter;
     private SharedPreferences sPref;
 
+    private OnOpenFragmentListener onOpenFragmentListener;
+
+
+    public static ForecastFragment newInstance(String cityName) {
+        ForecastFragment forecastFragment = new ForecastFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("CITY_NAME", cityName);
+        forecastFragment.setArguments(bundle);
+
+        return forecastFragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnOpenFragmentListener) {
+            onOpenFragmentListener = (OnOpenFragmentListener) context;
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,11 +106,9 @@ public class ForecastFragment extends Fragment {
         view.findViewById(R.id.buttonTemperatureMode).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, new TempModePreferenceFragment(), TempModePreferenceFragment.class.getSimpleName())
-                        .addToBackStack(null)
-                        .commit();
+                if (onOpenFragmentListener != null) {
+                    onOpenFragmentListener.onOpenTempModePreferenceFragment();
+                }
             }
         });
 
@@ -128,10 +146,9 @@ public class ForecastFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, CityListFragment.newInstance(), CityListFragment.class.getSimpleName())
-                    .commit();
+            if (onOpenFragmentListener != null) {
+                onOpenFragmentListener.onOpenCityListFragment();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -241,5 +258,11 @@ public class ForecastFragment extends Fragment {
         sPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         savedText = sPref.getString(SAVED_CITY, "NO_SAVED");
         return savedText;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        onOpenFragmentListener = null;
     }
 }

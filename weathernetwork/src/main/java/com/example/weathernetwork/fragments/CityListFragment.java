@@ -1,5 +1,6 @@
 package com.example.weathernetwork.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,17 +47,22 @@ public class CityListFragment extends Fragment implements AddCityDialogFragment.
     private List<CityEntity> cities = new ArrayList<CityEntity>();
     private CityViewModel viewModel;
 
+    private OnOpenFragmentListener onOpenFragmentListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnOpenFragmentListener) {
+            onOpenFragmentListener = (OnOpenFragmentListener) context;
+        }
+    }
+
     private FragmentCommunicator communicator = new FragmentCommunicator() {
         @Override
         public void onItemClickListener(String cityName) {
-            ForecastFragment forecastFragment = new ForecastFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("CITY_NAME", cityName);
-            forecastFragment.setArguments(bundle);
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragmentContainer, forecastFragment, ForecastFragment.class.getSimpleName())
-                    .commit();
+            if (onOpenFragmentListener != null) {
+                onOpenFragmentListener.onOpenForecastFragmentByCityName(cityName);
+            }
         }
     };
 
@@ -94,10 +100,9 @@ public class CityListFragment extends Fragment implements AddCityDialogFragment.
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragmentContainer, new ForecastFragment(), ForecastFragment.class.getSimpleName())
-                        .commit();
+                if (onOpenFragmentListener != null) {
+                    onOpenFragmentListener.onOpenForecastFragment();
+                }
             }
         });
 
@@ -162,5 +167,11 @@ public class CityListFragment extends Fragment implements AddCityDialogFragment.
                 Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        onOpenFragmentListener = null;
     }
 }
