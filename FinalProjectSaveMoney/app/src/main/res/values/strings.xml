@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Final Project - Save Money</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="welcomeDescription">Вы только что сделали первый шаг, чтобы привести в порядок вашу финансовую сферу. "\n" Давайте начнем!</string>
+</resources>
