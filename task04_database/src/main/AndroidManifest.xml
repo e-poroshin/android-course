@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PhoneBookMainActivity">
+        <activity android:name=".activities.PhoneBookMainActivity">
 
             <meta-data
                 android:name="android.app.searchable"
@@ -33,10 +33,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PhoneBookAddContactActivity"/>
-        <activity android:name=".PhoneBookEditContactActivity"/>
-        <activity android:name=".CustomViewActivity"/>
-        <activity android:name=".WebPageActivity"/>
+        <activity android:name=".activities.PhoneBookAddContactActivity"/>
+        <activity android:name=".activities.PhoneBookEditContactActivity"/>
+        <activity android:name=".activities.CustomViewActivity"/>
+        <activity android:name=".activities.WebPageActivity"/>
+        
+        <provider
+            android:authorities="com.gmail.task04_database"
+            android:name=".contentprovider.PhoneBookContentProvider"
+            android:exported="true"/>
 
     </application>
 

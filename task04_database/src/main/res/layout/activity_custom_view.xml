@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/custom_view_constraintLayout">
 
-    <com.gmail.task04_database.DrawCustomView
+    <com.gmail.task04_database.activities.custom_view.DrawCustomView
         android:id="@+id/custom_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
