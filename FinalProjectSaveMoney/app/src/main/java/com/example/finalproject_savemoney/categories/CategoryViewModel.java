@@ -15,15 +15,21 @@ public class CategoryViewModel extends AndroidViewModel {
 
     private Repository repository;
     private LiveData<List<CategoryEntity>> allCategoriesLiveData;
+    private LiveData<List<String>> allCategoryNamesLiveData;
 
     public CategoryViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
         allCategoriesLiveData = repository.getAllCategories();
+        allCategoryNamesLiveData = repository.getCategoryNames();
     }
 
-    public LiveData<List<CategoryEntity>> getLiveData() {
+    public LiveData<List<CategoryEntity>> getLiveDataCategories() {
         return allCategoriesLiveData;
+    }
+
+    public LiveData<List<String>> getLiveDataCategoryNames() {
+        return allCategoryNamesLiveData;
     }
 
     public void insert(CategoryEntity category) {

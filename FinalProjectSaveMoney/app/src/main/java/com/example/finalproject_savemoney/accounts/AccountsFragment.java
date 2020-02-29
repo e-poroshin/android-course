@@ -81,7 +81,7 @@ public class AccountsFragment extends Fragment {
         if (item.getItemId() == R.id.action_add) {
             if (onFragmentActionListener != null) {
 //                onOpenFragmentListener.onOpenCityListFragment();
-                Toast.makeText(getContext(), "Click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Add account", Toast.LENGTH_SHORT).show();
             }
             return true;
         }
@@ -96,7 +96,7 @@ public class AccountsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         viewModel = new ViewModelProvider(this).get(AccountsViewModel.class);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), new Observer<List<AccountEntity>>() {
+        viewModel.getLiveDataAccounts().observe(getViewLifecycleOwner(), new Observer<List<AccountEntity>>() {
             @Override
             public void onChanged(List<AccountEntity> accountEntities) {
                 accounts = accountEntities;

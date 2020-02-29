@@ -75,7 +75,7 @@ public class CategoriesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         viewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
-        viewModel.getLiveData().observe(getViewLifecycleOwner(), new Observer<List<CategoryEntity>>() {
+        viewModel.getLiveDataCategories().observe(getViewLifecycleOwner(), new Observer<List<CategoryEntity>>() {
             @Override
             public void onChanged(List<CategoryEntity> categoryEntities) {
                 categories = categoryEntities;

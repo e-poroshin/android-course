@@ -37,32 +37,23 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Re
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         if (categories.get(position).getName().equals("Продукты")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_18);
-        }
-        if (categories.get(position).getName().equals("Здоровье")) {
+        } else if (categories.get(position).getName().equals("Здоровье")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_19);
-        }
-        if (categories.get(position).getName().equals("Кафе")) {
+        } else if (categories.get(position).getName().equals("Кафе")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_20);
-        }
-        if (categories.get(position).getName().equals("Досуг")) {
+        } else if (categories.get(position).getName().equals("Досуг")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_21);
-        }
-        if (categories.get(position).getName().equals("Транспорт")) {
+        }else if (categories.get(position).getName().equals("Транспорт")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_22);
-        }
-        if (categories.get(position).getName().equals("Подарки")) {
+        } else if (categories.get(position).getName().equals("Подарки")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_23);
-        }
-        if (categories.get(position).getName().equals("Покупки")) {
+        } else if (categories.get(position).getName().equals("Покупки")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_24);
-        }
-        if (categories.get(position).getName().equals("Семья")) {
+        } else if (categories.get(position).getName().equals("Семья")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_25);
-        }
-        if (categories.get(position).getName().equals("Зарплата")) {
+        } else if (categories.get(position).getName().equals("Зарплата")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_29);
         }
-
         holder.textViewName.setText(categories.get(position).getName());
     }
 

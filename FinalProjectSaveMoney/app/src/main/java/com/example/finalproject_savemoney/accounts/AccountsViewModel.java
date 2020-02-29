@@ -15,15 +15,21 @@ public class AccountsViewModel extends AndroidViewModel {
 
     private Repository repository;
     private LiveData<List<AccountEntity>> allAccountsLiveData;
+    private LiveData<List<String>> allAccountNamesLiveData;
 
     public AccountsViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
         allAccountsLiveData = repository.getAllAccounts();
+        allAccountNamesLiveData = repository.getAccountNames();
     }
 
-    public LiveData<List<AccountEntity>> getLiveData() {
+    public LiveData<List<AccountEntity>> getLiveDataAccounts() {
         return allAccountsLiveData;
+    }
+
+    public LiveData<List<String>> getLiveDataAccountNames() {
+        return allAccountNamesLiveData;
     }
 
     public void insert(AccountEntity accounts) {

@@ -28,7 +28,8 @@ public class OperationEntity {
     @TypeConverters({OperationTypeConverter.class})
     private OperationType type;
 
-    public OperationEntity(int categoryId, int accountId, long date, double sum, String description, OperationType type) {
+    public OperationEntity(int categoryId, int accountId, long date, double sum,
+                           String description, OperationType type) {
         this.categoryId = categoryId;
         this.accountId = accountId;
         this.date = date;

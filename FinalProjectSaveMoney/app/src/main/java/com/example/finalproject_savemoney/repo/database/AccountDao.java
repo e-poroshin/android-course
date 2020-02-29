@@ -24,4 +24,7 @@ public interface AccountDao {
 
     @Query("SELECT * FROM accounts")
     LiveData<List<AccountEntity>> getAllAccounts();
+
+    @Query("SELECT account_name FROM accounts")
+    LiveData<List<String>> getAccountNames();
 }

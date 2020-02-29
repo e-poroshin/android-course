@@ -14,7 +14,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:menu="@menu/add_operation_menu"
-        app:title="Добавить операцию - Расход"
+        app:title="Расход"
         app:titleTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_add_operation">
@@ -49,16 +49,75 @@
 
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/textViewSelectCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выберите категорию:"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"/>
+
+    <Spinner
+        android:id="@+id/spinnerCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSelectCategory"/>
+
+    <TextView
+        android:id="@+id/textViewSelectAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Выберите счет:"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCategories"/>
+
+    <Spinner
+        android:id="@+id/spinnerAccounts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSelectAccount"/>
+
+    <TextView
+        android:id="@+id/textViewAddSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Введите сумму:"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerAccounts"/>
+
     <EditText
         android:id="@+id/editTextSum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:hint="Сумма"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAddSum" />
 
     <EditText
         android:id="@+id/editTextDescription"
@@ -67,7 +126,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Описание"
+        android:hint="Описание (опционально)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextSum" />
 

@@ -19,23 +19,38 @@ public class Repository {
 
     private CategoryDao categoryDao;
     private LiveData<List<CategoryEntity>> allCategoriesLiveData;
+    private LiveData<List<String>> allCategoryNamesLiveData;
+
     private AccountDao accountDao;
     private LiveData<List<AccountEntity>> allAccountsLiveData;
+    private LiveData<List<String>> allAccountNamesLiveData;
+
     private OperationDao operationDao;
     private LiveData<List<Operation>> allOperationsLiveData;
+    private LiveData<List<String>> allCategoryNamesFromOperationsLiveData;
 
     public Repository(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
+
         categoryDao = db.categoryDao();
         allCategoriesLiveData = categoryDao.getAllCategories();
+        allCategoryNamesLiveData = categoryDao.getCategoryNames();
+
         accountDao = db.accountDao();
         allAccountsLiveData = accountDao.getAllAccounts();
+        allAccountNamesLiveData = accountDao.getAccountNames();
+
         operationDao = db.operationDao();
         allOperationsLiveData = operationDao.getAllOperations();
+        allCategoryNamesFromOperationsLiveData = operationDao.getCategoryNamesFromOperations();
     }
 
     public LiveData<List<CategoryEntity>> getAllCategories() {
         return allCategoriesLiveData;
+    }
+
+    public LiveData<List<String>> getCategoryNames() {
+        return allCategoryNamesLiveData;
     }
 
     public void insert(final CategoryEntity category) {
@@ -70,6 +85,10 @@ public class Repository {
         return allAccountsLiveData;
     }
 
+    public LiveData<List<String>> getAccountNames() {
+        return allAccountNamesLiveData;
+    }
+
     public void insert(final AccountEntity accounts) {
         AppDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -100,6 +119,10 @@ public class Repository {
 
     public LiveData<List<Operation>> getAllOperations() {
         return allOperationsLiveData;
+    }
+
+    public LiveData<List<String>> getCategoryNamesFromOperations() {
+        return allCategoryNamesFromOperationsLiveData;
     }
 
     public void insert(final OperationEntity operations) {

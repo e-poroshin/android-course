@@ -15,7 +15,7 @@ import com.example.finalproject_savemoney.accounts.AccountsFragment;
 import com.example.finalproject_savemoney.categories.CategoriesFragment;
 import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
 import com.example.finalproject_savemoney.operations.OperationsFragment;
-import com.example.finalproject_savemoney.fragments.StatisticsFragment;
+import com.example.finalproject_savemoney.statistics.StatisticsFragment;
 import com.example.finalproject_savemoney.repo.database.Operation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

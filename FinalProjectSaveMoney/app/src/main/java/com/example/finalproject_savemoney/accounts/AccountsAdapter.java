@@ -38,9 +38,10 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.Recycl
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         if (accounts.get(position).getName().equals("Наличные")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_28);
-        }
-        if (accounts.get(position).getName().equals("Карта")) {
+        } else if (accounts.get(position).getName().equals("Карта")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_27);
+        } else {
+            holder.imageViewIcon.setImageResource(R.drawable.group_29);
         }
         holder.textViewName.setText(accounts.get(position).getName());
         holder.textViewBalance.setText(String.valueOf(accounts.get(position).getBalance()));
