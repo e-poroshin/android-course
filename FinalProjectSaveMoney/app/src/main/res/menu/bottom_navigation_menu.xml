@@ -6,25 +6,25 @@
         android:id="@+id/action_operations"
         android:enabled="true"
         android:icon="@drawable/storage"
-        android:title="Operations"
+        android:title="@string/operations_ru"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_accounts"
         android:enabled="true"
         android:icon="@drawable/account_balance_wallet"
-        android:title="Accounts"
+        android:title="@string/accounts_ru"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_categories"
         android:enabled="true"
         android:icon="@drawable/donut_small"
-        android:title="Categories"
+        android:title="@string/categories_ru"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_statistics"
         android:enabled="true"
         android:icon="@drawable/insert_chart"
-        android:title="Statistics"
+        android:title="@string/statistics_ru"
         app:showAsAction="always" />
 
 </menu>

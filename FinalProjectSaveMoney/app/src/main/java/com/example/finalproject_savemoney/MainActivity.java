@@ -1,6 +1,5 @@
 package com.example.finalproject_savemoney;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,21 +10,16 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import com.example.finalproject_savemoney.fragments.AccountsFragment;
-import com.example.finalproject_savemoney.fragments.CategoriesFragment;
-import com.example.finalproject_savemoney.fragments.OnOpenFragmentListener;
-import com.example.finalproject_savemoney.fragments.OperationsFragment;
+import com.example.finalproject_savemoney.accounts.AccountsFragment;
+import com.example.finalproject_savemoney.categories.CategoriesFragment;
+import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
+import com.example.finalproject_savemoney.operations.OperationsFragment;
 import com.example.finalproject_savemoney.fragments.StatisticsFragment;
+import com.example.finalproject_savemoney.repo.database.Operation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class MainActivity extends AppCompatActivity implements OnOpenFragmentListener {
-
-    private final String DATE_FORMAT = "dd-MM-yyyy";
+public class MainActivity extends AppCompatActivity implements OnFragmentActionListener {
 
     private static long back_pressed;
     private SharedPreferences sharedPreferences;
@@ -41,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements OnOpenFragmentLis
             Intent intent = new Intent(this, StartActivity.class);
             startActivity(intent);
             saveState(true);
-            finish();
         }
         setContentView(R.layout.activity_main);
         onOpenOperationsFragment();
@@ -50,10 +43,6 @@ public class MainActivity extends AppCompatActivity implements OnOpenFragmentLis
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-//                long timeMillis = System.currentTimeMillis();
-//                Date date = new Date(timeMillis);
-//                String currentDate = sdf.format(date);
                 switch (item.getItemId()) {
                     case R.id.action_categories:
                         onOpenCategoriesFragment();
@@ -81,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnOpenFragmentLis
             finish();
         }
         else {
-            Toast.makeText(getBaseContext(), "Press once again to exit",
+            Toast.makeText(getBaseContext(), R.string.backPressed_ru,
                     Toast.LENGTH_SHORT).show();
             back_pressed = System.currentTimeMillis();
         }
@@ -95,6 +84,23 @@ public class MainActivity extends AppCompatActivity implements OnOpenFragmentLis
 
     private boolean getState() {
         return sharedPreferences.getBoolean(SAVED_STATE, false);
+    }
+
+    @Override
+    public void onOpenOperationsFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, OperationsFragment.newInstance(), OperationsFragment.class.getSimpleName())
+                .commit();
+    }
+
+
+    @Override
+    public void onOpenOperationsFragmentBundle(Operation operation) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentContainer, OperationsFragment.newBundleInstance(operation), OperationsFragment.class.getSimpleName())
+                .commit();
     }
 
     @Override
@@ -114,18 +120,11 @@ public class MainActivity extends AppCompatActivity implements OnOpenFragmentLis
     }
 
     @Override
-    public void onOpenOperationsFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, OperationsFragment.newInstance(), OperationsFragment.class.getSimpleName())
-                .commit();
-    }
-
-    @Override
     public void onOpenStatisticsFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentContainer, StatisticsFragment.newInstance(), StatisticsFragment.class.getSimpleName())
                 .commit();
     }
+
 }

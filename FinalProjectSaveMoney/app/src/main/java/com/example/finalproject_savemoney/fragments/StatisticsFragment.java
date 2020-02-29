@@ -13,11 +13,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.example.finalproject_savemoney.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StatisticsFragment extends Fragment {
 
-    private OnOpenFragmentListener onOpenFragmentListener;
+    private OnFragmentActionListener onFragmentActionListener;
     private Toolbar toolbar;
+    private PieChart pieChart;
 
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
@@ -27,8 +36,8 @@ public class StatisticsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context instanceof OnOpenFragmentListener) {
-            onOpenFragmentListener = (OnOpenFragmentListener) context;
+        if (context instanceof OnFragmentActionListener) {
+            onFragmentActionListener = (OnFragmentActionListener) context;
         }
     }
 
@@ -38,14 +47,33 @@ public class StatisticsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_statistics, container, false);
         toolbar = view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
+
+        pieChart = view.findViewById(R.id.pieChart);
+        setUpPieChart();
         return view;
     }
 
+    private void setUpPieChart() {
+        float consumptionValues[] = {98.8f, 123.8f, 161.6f, 24.2f, 52f, 58.2f, 35.4f, 13.8f, 78.4f, 203.4f, 240.2f, 159.7f};
+        String categoryNames[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"};
+        List<PieEntry> pieEntries = new ArrayList<>();
 
+        for (int i = 0; i < consumptionValues.length; i++) {
+            pieEntries.add(new PieEntry(consumptionValues[i], categoryNames[i]));
+        }
+        PieDataSet dataSet = new PieDataSet(pieEntries, "Cart Label");
+        dataSet.setColors(ColorTemplate.PASTEL_COLORS);
+        PieData data = new PieData(dataSet);
+
+        pieChart.setData(data);
+        pieChart.animateXY(1000, 1000);
+        pieChart.invalidate();
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        onOpenFragmentListener = null;
+        onFragmentActionListener = null;
     }
 }

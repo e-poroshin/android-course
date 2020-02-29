@@ -15,19 +15,19 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:menu="@menu/accounts_menu"
-        app:title="Accounts"
+        app:title="Счета"
         app:titleTextColor="@color/text_icons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Accounts"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_accounts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

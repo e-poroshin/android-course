@@ -22,8 +22,6 @@ public class StartActivity extends AppCompatActivity {
         findViewById(R.id.buttonStart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                startActivity(intent);
                 finish();
             }
         });

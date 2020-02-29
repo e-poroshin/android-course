@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_add"
+        android:id="@+id/action_check"
         app:showAsAction="always"
-        android:icon="@drawable/plus_circle"
-        android:title="Add" />
+        android:icon="@drawable/mdi_check_circle"
+        android:title="TODO" />
 
 </menu>
