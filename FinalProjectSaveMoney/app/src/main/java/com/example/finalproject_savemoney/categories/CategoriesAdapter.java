@@ -53,6 +53,8 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Re
             holder.imageViewIcon.setImageResource(R.drawable.group_25);
         } else if (categories.get(position).getName().equals("Зарплата")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_29);
+        } else {
+            holder.imageViewIcon.setImageResource(R.drawable.group_26);
         }
         holder.textViewName.setText(categories.get(position).getName());
     }

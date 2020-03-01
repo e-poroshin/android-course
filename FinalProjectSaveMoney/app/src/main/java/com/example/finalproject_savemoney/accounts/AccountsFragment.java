@@ -1,6 +1,7 @@
 package com.example.finalproject_savemoney.accounts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,11 +21,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalproject_savemoney.AddAccountActivity;
+import com.example.finalproject_savemoney.AddOperationActivity;
+import com.example.finalproject_savemoney.EditAccountActivity;
 import com.example.finalproject_savemoney.R;
+import com.example.finalproject_savemoney.fragments.AddCategoryDialogFragment;
 import com.example.finalproject_savemoney.fragments.FragmentCommunicator;
 import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
 import com.example.finalproject_savemoney.repo.database.AccountEntity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +44,13 @@ public class AccountsFragment extends Fragment {
     private AccountsViewModel viewModel;
     private FragmentCommunicator communicator = new FragmentCommunicator() {
         @Override
-        public void onItemClickListener(String text) {
-            if (onFragmentActionListener != null) {
-//                onOpenFragmentListener.onOpenAccountsFragment();
-                Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-            }
+        public void onItemClickListener(String categoryName) {
+        }
+        @Override
+        public void onItemAccountClickListener(AccountEntity accountEntity) {
+            Intent intent = new Intent(requireActivity(), EditAccountActivity.class);
+            intent.putExtra(AccountEntity.class.getSimpleName(), (Serializable) accountEntity);
+            startActivity(intent);
         }
     };
 
@@ -79,10 +87,8 @@ public class AccountsFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
-            if (onFragmentActionListener != null) {
-//                onOpenFragmentListener.onOpenCityListFragment();
-                Toast.makeText(getContext(), "Add account", Toast.LENGTH_SHORT).show();
-            }
+            Intent intent = new Intent(requireActivity(), AddAccountActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -110,4 +116,5 @@ public class AccountsFragment extends Fragment {
         super.onDestroy();
         onFragmentActionListener = null;
     }
+
 }

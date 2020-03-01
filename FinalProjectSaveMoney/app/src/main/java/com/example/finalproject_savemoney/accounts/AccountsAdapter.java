@@ -81,8 +81,8 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.Recycl
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    String text = accounts.get(position).getName();
-                    mCommunication.onItemClickListener(text);
+                    AccountEntity accountEntity = accounts.get(position);
+                    mCommunication.onItemAccountClickListener(accountEntity);
                 }
             });
         }

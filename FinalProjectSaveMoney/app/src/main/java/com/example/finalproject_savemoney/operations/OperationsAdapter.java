@@ -38,40 +38,28 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Re
 
         if (operations.get(position).getCategory().getName().equals("Продукты")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_18);
-            holder.textViewName.setText("Продукты");
         } else if (operations.get(position).getCategory().getName().equals("Здоровье")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_19);
-            holder.textViewName.setText("Здоровье");
         } else if (operations.get(position).getCategory().getName().equals("Кафе")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_20);
-            holder.textViewName.setText("Кафе");
         } else if (operations.get(position).getCategory().getName().equals("Досуг")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_21);
-            holder.textViewName.setText("Досуг");
         } else if (operations.get(position).getCategory().getName().equals("Транспорт")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_22);
-            holder.textViewName.setText("Транспорт");
         } else if (operations.get(position).getCategory().getName().equals("Подарки")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_23);
-            holder.textViewName.setText("Подарки");
         } else if (operations.get(position).getCategory().getName().equals("Покупки")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_24);
-            holder.textViewName.setText("Покупки");
         } else if (operations.get(position).getCategory().getName().equals("Семья")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_25);
-            holder.textViewName.setText("Семья");
         } else if (operations.get(position).getCategory().getName().equals("Зарплата")) {
             holder.imageViewIcon.setImageResource(R.drawable.group_29);
-            holder.textViewName.setText("Зарплата");
+        } else {
+            holder.imageViewIcon.setImageResource(R.drawable.group_26);
         }
-
-        if (operations.get(position).getAccount().getName().equals("Наличные")) {
-            holder.textViewAccount.setText("Наличные");
-            holder.textViewCurrency.setText("BYN");
-        } else if (operations.get(position).getAccount().getName().equals("Карта")) {
-            holder.textViewAccount.setText("Карта");
-            holder.textViewCurrency.setText("BYN");
-        }
+        holder.textViewName.setText(operations.get(position).getCategory().getName());
+        holder.textViewAccount.setText(operations.get(position).getAccount().getName());
+        holder.textViewCurrency.setText(operations.get(position).getAccount().getCurrency());
         holder.textViewSum.setText(String.valueOf(operations.get(position).getOperationEntity().getSum()));
     }
 

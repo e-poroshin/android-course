@@ -3,6 +3,9 @@ package com.example.finalproject_savemoney.categories;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -18,14 +21,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject_savemoney.R;
+import com.example.finalproject_savemoney.fragments.AddCategoryDialogFragment;
 import com.example.finalproject_savemoney.fragments.FragmentCommunicator;
 import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
+import com.example.finalproject_savemoney.repo.database.AccountEntity;
 import com.example.finalproject_savemoney.repo.database.CategoryEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesFragment extends Fragment {
+public class CategoriesFragment extends Fragment implements AddCategoryDialogFragment.EditNameDialogListener {
 
     private OnFragmentActionListener onFragmentActionListener;
     private Toolbar toolbar;
@@ -33,13 +38,13 @@ public class CategoriesFragment extends Fragment {
     private CategoriesAdapter adapter;
     private List<CategoryEntity> categories = new ArrayList<>();
     private CategoryViewModel viewModel;
+    private AddCategoryDialogFragment addCategoryDialogFragment;
     private FragmentCommunicator communicator = new FragmentCommunicator() {
         @Override
-        public void onItemClickListener(String text) {
-            if (onFragmentActionListener != null) {
-//                onOpenFragmentListener.onOpenAccountsFragment();
-                Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-            }
+        public void onItemClickListener(String categoryName) {
+        }
+        @Override
+        public void onItemAccountClickListener(AccountEntity accountEntity) {
         }
     };
 
@@ -65,6 +70,31 @@ public class CategoriesFragment extends Fragment {
         setHasOptionsMenu(true);
         recyclerView = view.findViewById(R.id.recycler_view_categories);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.categories_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_add_category) {
+            addCategoryDialogFragment = new AddCategoryDialogFragment();
+            addCategoryDialogFragment.setTargetFragment(CategoriesFragment.this, 1);
+            addCategoryDialogFragment.show(getParentFragmentManager(), addCategoryDialogFragment.getClass().getName());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        viewModel.insert(new CategoryEntity(inputText));
+        if (onFragmentActionListener != null) {
+            onFragmentActionListener.onOpenCategoriesFragment();
+        }
     }
 
     @Override

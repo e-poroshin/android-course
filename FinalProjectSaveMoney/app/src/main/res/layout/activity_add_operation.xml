@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_add_operation">
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Расход"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:checked="true"/>
 
         <RadioButton
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Доход"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:checked="false"/>
 
     </RadioGroup>
@@ -54,11 +54,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Выберите категорию:"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textColor="@color/colorAccent"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup"/>
 
@@ -77,11 +77,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Выберите счет:"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textColor="@color/colorAccent"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCategories"/>
 
@@ -96,28 +96,29 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewSelectAccount"/>
 
     <TextView
-        android:id="@+id/textViewAddSum"
+        android:id="@+id/textViewAddBalance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Введите сумму:"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textColor="@color/colorAccent"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerAccounts"/>
 
     <EditText
-        android:id="@+id/editTextSum"
+        android:id="@+id/editTextBalance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
+        android:textSize="14sp"
         android:hint="Сумма"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAddSum" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAddBalance" />
 
     <EditText
         android:id="@+id/editTextDescription"
@@ -126,8 +127,25 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
+        android:textSize="14sp"
         android:hint="Описание (опционально)"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSum" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextBalance" />
+
+    <Button
+        android:id="@+id/buttonSaveOperation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:background="@drawable/res_background_round_rect_red"
+        android:text="Сохранить"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

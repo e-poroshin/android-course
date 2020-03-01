@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.finalproject_savemoney.R;
 import com.example.finalproject_savemoney.categories.CategoryViewModel;
 import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
+import com.example.finalproject_savemoney.operations.OperationsViewModel;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -35,6 +36,7 @@ public class StatisticsFragment extends Fragment {
     private PieChart pieChart;
     private List<String> categoryNames = new ArrayList<>();
     private CategoryViewModel viewModelCategory;
+    private OperationsViewModel viewModelOperation;
 
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
@@ -59,8 +61,17 @@ public class StatisticsFragment extends Fragment {
 
         pieChart = view.findViewById(R.id.pieChart);
 
-        viewModelCategory = new ViewModelProvider(this).get(CategoryViewModel.class);
-        viewModelCategory.getLiveDataCategoryNames().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+//        viewModelCategory = new ViewModelProvider(this).get(CategoryViewModel.class);
+//        viewModelCategory.getLiveDataCategoryNames().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+//            @Override
+//            public void onChanged(List<String> categories) {
+//                categoryNames = categories;
+//                Log.d("MY_TAG", categoryNames.toString());
+//                setUpPieChart(categoryNames);
+//            }
+//        });
+        viewModelOperation = new ViewModelProvider(this).get(OperationsViewModel.class);
+        viewModelOperation.getLiveDataCategoryNamesFromOperations().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> categories) {
                 categoryNames = categories;
@@ -73,7 +84,7 @@ public class StatisticsFragment extends Fragment {
     }
 
     private void setUpPieChart(List<String> categories) {
-        float consumptionValues[] = {98.8f, 123.8f, 161.6f, 24.2f, 52f, 58.2f, 35.4f, 13.8f, 78.4f, 203.4f, 240.2f, 159.7f};
+        float consumptionValues[] = {98.8f, 123.8f, 161.6f, 24.2f, 52f, 58.2f, 35.4f, 13.8f, 78.4f, 203.4f, 240.2f};
         List<PieEntry> pieEntries = new ArrayList<>();
 
         for (int i = 0; i < categories.size(); i++) {

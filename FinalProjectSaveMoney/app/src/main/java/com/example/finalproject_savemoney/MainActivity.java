@@ -94,15 +94,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentActionL
                 .commit();
     }
 
-
-    @Override
-    public void onOpenOperationsFragmentBundle(Operation operation) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentContainer, OperationsFragment.newBundleInstance(operation), OperationsFragment.class.getSimpleName())
-                .commit();
-    }
-
     @Override
     public void onOpenAccountsFragment() {
         getSupportFragmentManager()
