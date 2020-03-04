@@ -112,6 +112,9 @@ public class EditAccountActivity extends AppCompatActivity {
         } else {
             currency = editTextCurrency.getText().toString();
         }
+        accountEntity.setName(name);
+        accountEntity.setBalance(balance);
+        accountEntity.setCurrency(currency);
 
         viewModelAccount.update(accountEntity);
         finish();
