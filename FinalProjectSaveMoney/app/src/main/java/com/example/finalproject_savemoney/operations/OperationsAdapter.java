@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject_savemoney.R;
@@ -61,6 +62,13 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationsAdapter.Re
         holder.textViewAccount.setText(operations.get(position).getAccount().getName());
         holder.textViewCurrency.setText(operations.get(position).getAccount().getCurrency());
         holder.textViewSum.setText(String.valueOf(operations.get(position).getOperationEntity().getSum()));
+        if (operations.get(position).getOperationEntity().getType().equals(OperationType.CONSUMPTION)) {
+            holder.textViewSum.setTextColor(ContextCompat.getColor(holder.textViewSum.getContext(), R.color.operation_consumption));
+            holder.textViewCurrency.setTextColor(ContextCompat.getColor(holder.textViewCurrency.getContext(), R.color.operation_consumption));
+        } else if (operations.get(position).getOperationEntity().getType().equals(OperationType.INCOME)) {
+            holder.textViewSum.setTextColor(ContextCompat.getColor(holder.textViewSum.getContext(), R.color.operation_income));
+            holder.textViewCurrency.setTextColor(ContextCompat.getColor(holder.textViewCurrency.getContext(), R.color.operation_income));
+        }
     }
 
     @Override

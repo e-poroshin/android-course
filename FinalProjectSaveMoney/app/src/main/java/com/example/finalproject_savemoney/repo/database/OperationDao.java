@@ -26,7 +26,4 @@ public interface OperationDao {
     @Transaction
     @Query("SELECT * FROM operations")
     LiveData<List<Operation>> getAllOperations();
-
-    @Query("SELECT category_name FROM categories")
-    LiveData<List<String>> getCategoryNamesFromOperations();
 }

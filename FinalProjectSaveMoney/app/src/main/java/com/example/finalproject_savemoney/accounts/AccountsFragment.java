@@ -1,6 +1,5 @@
 package com.example.finalproject_savemoney.accounts;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,12 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject_savemoney.AddAccountActivity;
-import com.example.finalproject_savemoney.AddOperationActivity;
 import com.example.finalproject_savemoney.EditAccountActivity;
 import com.example.finalproject_savemoney.R;
-import com.example.finalproject_savemoney.fragments.AddCategoryDialogFragment;
 import com.example.finalproject_savemoney.fragments.FragmentCommunicator;
-import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
 import com.example.finalproject_savemoney.repo.database.AccountEntity;
 
 import java.io.Serializable;
@@ -36,7 +31,6 @@ import java.util.List;
 
 public class AccountsFragment extends Fragment {
 
-    private OnFragmentActionListener onFragmentActionListener;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private AccountsAdapter adapter;
@@ -46,6 +40,7 @@ public class AccountsFragment extends Fragment {
         @Override
         public void onItemClickListener(String categoryName) {
         }
+
         @Override
         public void onItemAccountClickListener(AccountEntity accountEntity) {
             Intent intent = new Intent(requireActivity(), EditAccountActivity.class);
@@ -57,14 +52,6 @@ public class AccountsFragment extends Fragment {
     public static AccountsFragment newInstance() {
         AccountsFragment fragment = new AccountsFragment();
         return fragment;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentActionListener) {
-            onFragmentActionListener = (OnFragmentActionListener) context;
-        }
     }
 
     @Nullable
@@ -110,11 +97,4 @@ public class AccountsFragment extends Fragment {
             }
         });
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        onFragmentActionListener = null;
-    }
-
 }

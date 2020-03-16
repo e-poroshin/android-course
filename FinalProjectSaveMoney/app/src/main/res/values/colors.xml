@@ -8,4 +8,6 @@
     <color name="secondaryText">#757575</color>
     <color name="dividerColor">#BDBDBD</color>
     <color name="text_icons">#FFFFFF</color>
+    <color name="operation_income">#18B85B</color>
+    <color name="operation_consumption">#FE3C22</color>
 </resources>

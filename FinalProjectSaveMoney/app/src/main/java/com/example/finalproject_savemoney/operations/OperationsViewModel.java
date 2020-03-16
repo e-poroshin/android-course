@@ -17,21 +17,15 @@ public class OperationsViewModel extends AndroidViewModel {
 
     private Repository repository;
     private LiveData<List<Operation>> allOperationsLiveData;
-    private LiveData<List<String>> allCategoryNamesFromOperationsLiveData;
 
     public OperationsViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
         allOperationsLiveData = repository.getAllOperations();
-        allCategoryNamesFromOperationsLiveData = repository.getCategoryNamesFromOperations();
     }
 
     public LiveData<List<Operation>> getLiveData() {
         return allOperationsLiveData;
-    }
-
-    public LiveData<List<String>> getLiveDataCategoryNamesFromOperations() {
-        return allCategoryNamesFromOperationsLiveData;
     }
 
     public void insert(OperationEntity operations) {

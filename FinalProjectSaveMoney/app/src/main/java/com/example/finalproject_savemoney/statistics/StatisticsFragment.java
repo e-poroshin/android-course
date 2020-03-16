@@ -2,7 +2,6 @@ package com.example.finalproject_savemoney.statistics;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.finalproject_savemoney.R;
-import com.example.finalproject_savemoney.categories.CategoryViewModel;
 import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
+import com.example.finalproject_savemoney.operations.OperationType;
 import com.example.finalproject_savemoney.operations.OperationsViewModel;
+import com.example.finalproject_savemoney.repo.database.Operation;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -33,8 +33,7 @@ public class StatisticsFragment extends Fragment {
     private OnFragmentActionListener onFragmentActionListener;
     private Toolbar toolbar;
     private PieChart pieChart;
-    private List<String> categoryNames = new ArrayList<>();
-    private CategoryViewModel viewModelCategory;
+    private List<Operation> operations = new ArrayList<>();
     private OperationsViewModel viewModelOperation;
 
     public static StatisticsFragment newInstance() {
@@ -60,36 +59,26 @@ public class StatisticsFragment extends Fragment {
 
         pieChart = view.findViewById(R.id.pieChart);
 
-//        viewModelCategory = new ViewModelProvider(this).get(CategoryViewModel.class);
-//        viewModelCategory.getLiveDataCategoryNames().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
-//            @Override
-//            public void onChanged(List<String> categories) {
-//                categoryNames = categories;
-//                Log.d("MY_TAG", categoryNames.toString());
-//                setUpPieChart(categoryNames);
-//            }
-//        });
         viewModelOperation = new ViewModelProvider(this).get(OperationsViewModel.class);
-        viewModelOperation.getLiveDataCategoryNamesFromOperations().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+        viewModelOperation.getLiveData().observe(getViewLifecycleOwner(), new Observer<List<Operation>>() {
             @Override
-            public void onChanged(List<String> categories) {
-                categoryNames = categories;
-                Log.d("MY_TAG", categoryNames.toString());
-                setUpPieChart(categoryNames);
+            public void onChanged(List<Operation> operationList) {
+                operations = operationList;
+                setUpPieChart(operations);
             }
         });
-
         return view;
     }
 
-    private void setUpPieChart(List<String> categories) {
-        float consumptionValues[] = {98.8f, 123.8f, 161.6f, 24.2f, 52f, 58.2f, 35.4f, 13.8f, 78.4f, 203.4f, 240.2f};
+    private void setUpPieChart(List<Operation> operationList) {
         List<PieEntry> pieEntries = new ArrayList<>();
 
-        for (int i = 0; i < categories.size(); i++) {
-            pieEntries.add(new PieEntry(consumptionValues[i], categories.get(i)));
+        for (int i = 0; i < operationList.size(); i++) {
+            if (operationList.get(i).getOperationEntity().getType().equals(OperationType.CONSUMPTION)) {
+                pieEntries.add(new PieEntry((float) operationList.get(i).getOperationEntity().getSum(), operationList.get(i).getCategory().getName()));
+            }
         }
-        PieDataSet dataSet = new PieDataSet(pieEntries, "Отчет по категориям");
+        PieDataSet dataSet = new PieDataSet(pieEntries, "");
         dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
         dataSet.setValueTextColor(R.color.colorPrimaryDark);
         dataSet.setValueTextSize(14);

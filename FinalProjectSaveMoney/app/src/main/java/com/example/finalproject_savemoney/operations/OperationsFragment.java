@@ -1,13 +1,10 @@
 package com.example.finalproject_savemoney.operations;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,19 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalproject_savemoney.AddOperationActivity;
 import com.example.finalproject_savemoney.R;
 import com.example.finalproject_savemoney.fragments.FragmentCommunicator;
-import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
 import com.example.finalproject_savemoney.repo.database.AccountEntity;
 import com.example.finalproject_savemoney.repo.database.Operation;
-import com.example.finalproject_savemoney.repo.database.OperationEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
-
 public class OperationsFragment extends Fragment {
 
-    private OnFragmentActionListener onFragmentActionListener;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private OperationsAdapter adapter;
@@ -44,6 +36,7 @@ public class OperationsFragment extends Fragment {
         @Override
         public void onItemClickListener(String categoryName) {
         }
+
         @Override
         public void onItemAccountClickListener(AccountEntity accountEntity) {
         }
@@ -52,14 +45,6 @@ public class OperationsFragment extends Fragment {
     public static OperationsFragment newInstance() {
         OperationsFragment fragment = new OperationsFragment();
         return fragment;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentActionListener) {
-            onFragmentActionListener = (OnFragmentActionListener) context;
-        }
     }
 
     @Nullable
@@ -95,11 +80,5 @@ public class OperationsFragment extends Fragment {
                 adapter.setOperations(operations);
             }
         });
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        onFragmentActionListener = null;
     }
 }
