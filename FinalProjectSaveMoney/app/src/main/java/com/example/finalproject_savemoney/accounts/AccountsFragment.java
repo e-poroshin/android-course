@@ -94,7 +94,16 @@ public class AccountsFragment extends Fragment {
             public void onChanged(List<AccountEntity> accountEntities) {
                 accounts = accountEntities;
                 adapter.setAccounts(accounts);
+                toolbar.setTitle("Баланс: " + getBalance(accounts) + " BYN");
             }
         });
+    }
+
+    public double getBalance(List<AccountEntity> accounts) {
+        double sum = 0;
+        for (AccountEntity accountEntity : accounts) {
+            sum += accountEntity.getBalance();
+        }
+        return sum;
     }
 }

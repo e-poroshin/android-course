@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.finalproject_savemoney.R;
+import com.example.finalproject_savemoney.categories.CategoryViewModel;
 import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
 import com.example.finalproject_savemoney.operations.OperationType;
 import com.example.finalproject_savemoney.operations.OperationsViewModel;
@@ -35,6 +36,8 @@ public class StatisticsFragment extends Fragment {
     private PieChart pieChart;
     private List<Operation> operations = new ArrayList<>();
     private OperationsViewModel viewModelOperation;
+    private CategoryViewModel viewModelCategory;
+    private List<String> categoryNames = new ArrayList<>();
 
     public static StatisticsFragment newInstance() {
         StatisticsFragment fragment = new StatisticsFragment();
@@ -60,26 +63,44 @@ public class StatisticsFragment extends Fragment {
         pieChart = view.findViewById(R.id.pieChart);
 
         viewModelOperation = new ViewModelProvider(this).get(OperationsViewModel.class);
+        viewModelCategory = new ViewModelProvider(this).get(CategoryViewModel.class);
         viewModelOperation.getLiveData().observe(getViewLifecycleOwner(), new Observer<List<Operation>>() {
             @Override
             public void onChanged(List<Operation> operationList) {
                 operations = operationList;
-                setUpPieChart(operations);
+                viewModelCategory.getLiveDataCategoryNames().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+                    @Override
+                    public void onChanged(List<String> categories) {
+                        categoryNames = categories;
+                        setUpPieChart(operations, categoryNames);
+                    }
+                });
             }
         });
         return view;
     }
 
-    private void setUpPieChart(List<Operation> operationList) {
+    private void setUpPieChart(List<Operation> operationList, List<String> categoryNames) {
         List<PieEntry> pieEntries = new ArrayList<>();
 
-        for (int i = 0; i < operationList.size(); i++) {
-            if (operationList.get(i).getOperationEntity().getType().equals(OperationType.CONSUMPTION)) {
-                pieEntries.add(new PieEntry((float) operationList.get(i).getOperationEntity().getSum(), operationList.get(i).getCategory().getName()));
+        for (int j = 0; j < categoryNames.size(); j++) {
+            double sum = 0;
+            String label = "";
+            for (int i = 0; i < operationList.size(); i++) {
+                if (operationList.get(i).getOperationEntity().getType().equals(OperationType.CONSUMPTION)) {
+                    if (categoryNames.get(j).equals(operationList.get(i).getCategory().getName())) {
+                        sum += operationList.get(i).getOperationEntity().getSum();
+                        label = operationList.get(i).getCategory().getName();
+                    }
+                }
+            }
+            if (sum != 0) {
+                pieEntries.add(new PieEntry((float) sum, label));
             }
         }
+
         PieDataSet dataSet = new PieDataSet(pieEntries, "");
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        dataSet.setColors(ChartColors.MATERIAL_COLORS);
         dataSet.setValueTextColor(R.color.colorPrimaryDark);
         dataSet.setValueTextSize(14);
         PieData data = new PieData(dataSet);
