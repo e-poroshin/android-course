@@ -16,7 +16,6 @@ import com.example.finalproject_savemoney.categories.CategoriesFragment;
 import com.example.finalproject_savemoney.fragments.OnFragmentActionListener;
 import com.example.finalproject_savemoney.operations.OperationsFragment;
 import com.example.finalproject_savemoney.statistics.StatisticsFragment;
-import com.example.finalproject_savemoney.repo.database.Operation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentActionListener {
@@ -31,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentActionL
         super.onCreate(savedInstanceState);
 
         sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        if (!getState()) {
+        if (!isFirstVisit()) {
             Intent intent = new Intent(this, StartActivity.class);
             startActivity(intent);
-            saveState(true);
+            saveFirstVisit(true);
         }
         setContentView(R.layout.activity_main);
         onOpenOperationsFragment();
@@ -76,13 +75,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentActionL
         }
     }
 
-    private void saveState(boolean state) {
+    private void saveFirstVisit(boolean state) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SAVED_STATE, state);
         editor.apply();
     }
 
-    private boolean getState() {
+    private boolean isFirstVisit() {
         return sharedPreferences.getBoolean(SAVED_STATE, false);
     }
 
